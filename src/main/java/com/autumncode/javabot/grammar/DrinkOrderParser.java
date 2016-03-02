@@ -44,10 +44,22 @@ public class DrinkOrderParser extends BaseParser<DrinkOrder> {
                 push(new DrinkOrder()),
                 optional(ARTICLE()),
                 vesselType(),
-                run(() -> peek().vessel = Vessel.valueOf(match().toUpperCase())),
+            assignVessel(),
                 OF(),
                 DRINK(),
-                run(() ->peek().description = match())
+            assignDrink()
         );
+    }
+
+    public boolean assignVessel()
+    {
+        peek().vessel = Vessel.valueOf(match().toUpperCase());
+        return true;
+    }
+
+    public boolean assignDrink()
+    {
+        peek().description = match();
+        return true;
     }
 }
